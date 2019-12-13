@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,8 +25,7 @@ SECRET_KEY = '$@2z&+$_5vurck9m^_qowzdvrjg7si=-f8y7zso4cnd!uav7&l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cafe-trauma.herokuapp.com',
-                 'app.cafe-trauma.com',
+ALLOWED_HOSTS = ['.cafe-trauma.com',
                  'localhost',
                  '127.0.0.1',
                  '[::1]']
@@ -56,7 +54,6 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -91,18 +88,18 @@ WSGI_APPLICATION = 'cafe.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #}
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cafe',
-        'USER': 'cafeuser',
-        'PASSWORD': 'inmelet1',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'cafe',
+    #     'USER': 'cafeuser',
+    #     'PASSWORD': 'inmelet1',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '',
+    # }
 }
 
 
@@ -143,18 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/usr/share/nginx/html/static'
 STATIC_URL = '/static/'
 
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'angular'),
-    ('graphs', os.path.join(BASE_DIR, 'static_graphs')),
-)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WHITENOISE_INDEX_FILE = True
-# This is the base URL that the site will be located, currently used for RDF requests
-TRIPLESTORE_URL = 'https://dev.cafe-trauma.com/'
+BASE_URL='https://dev.cafe-trauma.com/'
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
@@ -163,6 +152,3 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())

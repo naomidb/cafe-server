@@ -143,7 +143,7 @@ USE_TZ = True
 STATIC_ROOT = '/usr/share/nginx/html/static'
 STATIC_URL = '/static/'
 
-BASE_URL='https://dev.cafe-trauma.com/'
+BASE_URL='cafe-trauma-dev-i.bmi.ufl.edu'
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 

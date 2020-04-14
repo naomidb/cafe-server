@@ -145,10 +145,9 @@ STATIC_URL = '/static/'
 
 BASE_URL='http://cafe-trauma-dev-i.bmi.ufl.edu/'
 
-SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.ufl.edu'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('SMTP_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('SMTP_HOST_PASSWORD')

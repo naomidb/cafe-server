@@ -3,6 +3,10 @@ from questionnaire.models import *
 from django.conf import settings
 from rdflib import Graph, BNode, URIRef, Literal, Namespace
 
+ENDPOINT = settings.BASE_URL + '/rdf'
+# ENDPOINT = settings.BASE_URL
+
+
 def get_definitions():
     query = """
 PREFIX obo: <http://purl.obolibrary.org/obo/>
@@ -20,7 +24,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     body = {'query': query, 'Accept': 'application/sparql-results+json' }
     headers = {'content-type': 'application/x-www-form-urlencoded'}
     try:
-        r = requests.request('POST', settings.BASE_URL + 'rdf', data=body, headers=headers)
+        r = requests.request('POST', ENDPOINT, data=body, headers=headers)
         if r.ok:
             try:
                 data = r.json()
@@ -55,7 +59,7 @@ def run_statements(statements, context):
     params = {'context': context}
     print('bod: {}'.format(body))
     try:
-        r = requests.request('PUT', settings.BASE_URL + 'rdf/statements', data=body, headers=headers, params=params)
+        r = requests.request('PUT', ENDPOINT + '/statements', data=body, headers=headers, params=params)
         print('finished: {}'.format(r.text))
     except:
         print('failed rdf')

@@ -187,6 +187,7 @@ USE_TZ = True
 STATIC_ROOT = '/usr/share/nginx/html/static'
 STATIC_URL = '/static/'
 
+# BASE_URL='http://cafe-trauma-dev-i.bmi.ufl.edu/'
 BASE_URL='http://localhost:8080/rdf4j-server/repositories/cafe'
 
 EMAIL_USE_TLS = True

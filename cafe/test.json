@@ -653,7 +653,7 @@
     "pk": 37,
     "fields": {
       "category": 1,
-      "text": "Your {trauma program|trauma program role} has official {physician liaisons|specialty liaison} in these specialties.",
+      "text": "In which of these specialties does your {trauma program|trauma program role} have official {physician liaisons|specialty liaison}?",
       "order": 70,
       "q_type": "check",
       "tags": "",
@@ -1038,7 +1038,7 @@
       "q_type": "check",
       "tags": "",
       "help_text": "",
-      "depends_string": null,
+      "depends_string": "#124 == 'Level I Trauma Center'",
       "api_name": null,
       "options": [
         28,
@@ -1257,7 +1257,7 @@
     "pk": 86,
     "fields": {
       "category": 23,
-      "text": "Is there a trauma-director approved plan that determines which types and severity of neurologic injury patients should remain at the facility when no neurosurgical coverage is present?",
+      "text": "Is there a trauma director-approved plan that determines which types and severity of neurologic injury patients should remain at the facility when no neurosurgical coverage is present?",
       "order": 40,
       "q_type": "bool",
       "tags": "",
@@ -1529,7 +1529,7 @@
     "pk": 115,
     "fields": {
       "category": 26,
-      "text": "For this Level I or Level II center, are all of the following medical specialists available?",
+      "text": "For this Level I or Level II center, which of the following medical specialists are available?",
       "order": 0,
       "q_type": "check",
       "tags": "",
@@ -1555,7 +1555,7 @@
     "pk": 116,
     "fields": {
       "category": 26,
-      "text": "For this Level I or Level II center, are all of the following surgical specialists available?",
+      "text": "For this Level I or Level II center, which of the following surgical specialists are available?",
       "order": 5,
       "q_type": "check",
       "tags": "",
@@ -1669,7 +1669,7 @@
     "pk": 134,
     "fields": {
       "category": 18,
-      "text": "Does a trauma program representative participate in {prehospital protocol|prehospital protocol} development|?",
+      "text": "Does a trauma program representative participate in {prehospital protocol|prehospital protocol} development?",
       "order": 140,
       "q_type": "bool",
       "tags": "",

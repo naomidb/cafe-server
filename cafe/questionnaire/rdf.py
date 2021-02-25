@@ -3,8 +3,8 @@ from questionnaire.models import *
 from django.conf import settings
 from rdflib import Graph, BNode, URIRef, Literal, Namespace
 
-ENDPOINT = settings.BASE_URL + 'rdf'
-# ENDPOINT = settings.BASE_URL
+# ENDPOINT = settings.BASE_URL + 'rdf'
+ENDPOINT = settings.BASE_URL
 
 
 def get_definitions():
@@ -25,6 +25,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     headers = {'content-type': 'application/x-www-form-urlencoded'}
     try:
         r = requests.request('POST', ENDPOINT, data=body, headers=headers)
+        if r.status_code == 401:
+            r = requests.request('POST', ENDPOINT, data=body, headers=headers, auth=('editor', 'secretpassword'))
         # r = requests.get(ENDPOINT, data=body)
         if r.ok:
             try:
@@ -55,8 +57,9 @@ def run_query(query):
     headers = {'content-type': 'application/x-www-form-urlencoded'}
     print('Running:\n' + query)
 
-    r = requests.get(ENDPOINT, params=payload, headers=headers, auth=('editor', 'secretpassword'))
-    # r = requests.get(ENDPOINT, params=payload, headers=headers)
+    r = requests.get(ENDPOINT, params=payload, headers=headers)
+    if r.status_code == 401:
+        r = requests.get(ENDPOINT, params=payload, headers=headers, auth=('editor', 'secretpassword'))
     # import pdb;pdb.set_trace()
 
     return r.json()
@@ -68,8 +71,9 @@ def delete_context(context):
     payload = { 'update': query }
     headers = {'content-type': 'application/n-triples'}
     print(query)
-    r = requests.post(ENDPOINT +'/statements', params=payload, auth=requests.auth.HTTPBasicAuth('editor', 'secretpassword'))
-    # r = requests.post(ENDPOINT +'/statements', params=payload)
+    r = requests.post(ENDPOINT +'/statements', params=payload)
+    if r.status_code == 401:
+        r = requests.post(ENDPOINT +'/statements', params=payload, auth=requests.auth.HTTPBasicAuth('editor', 'secretpassword'))
     if r.status_code == 200 or r.status_code == 204:
         print('triples deleted')
     else:
@@ -87,25 +91,15 @@ def run_statements(statements, context):
     '''.format(context=context, body=body)
     print(query)
     payload = {'update': query}
-    r = requests.post(ENDPOINT +'/statements', params=payload, auth=requests.auth.HTTPBasicAuth('editor', 'secretpassword'))
-    # r = requests.post(ENDPOINT +'/statements', params=payload)
+    r = requests.post(ENDPOINT +'/statements', params=payload)
+    if r.status_code == 401:
+        r = requests.post(ENDPOINT +'/statements', params=payload, auth=requests.auth.HTTPBasicAuth('editor', 'secretpassword'))
     if r.status_code == 200 or r.status_code == 204:
         print('triples added')
     else:
         print('error during triple creation')
         print(r.status_code)
 
-# def runn_statements(statements, context):
-#     import pdb; pdb.set_trace()
-#     body = ' .\n'.join([' '.join(s) for s in statements]) + ' .\n'
-#     headers = {'content-type': 'application/n-triples'}
-#     params = {'context': context}
-#     print('bod: {}'.format(body))
-#     try:
-#         r = requests.request('PUT', ENDPOINT + '/statements', data=body, headers=headers, params=params)
-#         print('finished: {}'.format(r.text))
-#     except:
-#         print('failed rdf')
 
 def get_uri(text, prefixes, bnodes, answer):
     split = text.format(user=answer.organization.id).split(':')
